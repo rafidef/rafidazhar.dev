@@ -31,7 +31,11 @@ NoNewPrivileges=true
 PrivateTmp=true
 ProtectSystem=strict
 ProtectHome=true
-ReadWritePaths=/srv/rafidazhar/current/.next/cache
+# The leading "-" makes a missing path non-fatal. deploy.sh ships this
+# directory so it should always exist; without the "-", a bundle that somehow
+# lacks it fails the namespace setup and the service crash-loops instead of
+# merely losing the image cache.
+ReadWritePaths=-/srv/rafidazhar/current/.next/cache
 ProtectKernelTunables=true
 ProtectKernelModules=true
 ProtectControlGroups=true

@@ -33,9 +33,25 @@ STAGE="$(mktemp -d)"
 trap 'rm -rf "$STAGE"' EXIT
 
 cp -R .next/standalone/. "$STAGE/"
-mkdir -p "$STAGE/.next"
-cp -R .next/static "$STAGE/.next/static"
-cp -R public "$STAGE/public"
+
+# Trailing /. on the source and an existing destination, so these MERGE.
+#
+# `cp -R public "$STAGE/public"` looks equivalent but is not: Next's standalone
+# output already contains a public/ holding just the files the tracer pulled in
+# (the logo SVGs read at build time), so the destination exists and cp nests the
+# real tree at public/public/. Everything except those traced logos then 404s
+# while the pages themselves still render, which is a quiet way to lose every
+# image, certificate and CV on the site.
+mkdir -p "$STAGE/.next/static" "$STAGE/public"
+cp -R .next/static/. "$STAGE/.next/static/"
+cp -R public/. "$STAGE/public/"
+
+# The unit runs under ProtectSystem=strict and names this directory in
+# ReadWritePaths, and systemd refuses to build the mount namespace if it does
+# not exist (status=226/NAMESPACE). Next also needs it writable at runtime for
+# the image optimiser. It ships empty rather than being created server side, so
+# every release owns its own cache and a rollback cannot inherit a stale one.
+mkdir -p "$STAGE/.next/cache"
 
 echo "==> Shipping release ${RELEASE}"
 ssh "$TARGET" "mkdir -p ${REMOTE_RELEASE} ${APP_ROOT}/shared"

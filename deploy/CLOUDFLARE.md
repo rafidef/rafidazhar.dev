@@ -237,10 +237,10 @@ written: real certificate, and Cloudflare SSL/TLS mode goes to **Full
 (strict)**. This is the least moving parts of the three.
 
 **Cloudflare Tunnel.** Install `cloudflared` on the VPS and run a tunnel to
-`http://127.0.0.1:3000`. The origin needs **no inbound ports open at all** —
-the tunnel dials out — so the 443 conflict stops mattering, the firewall rules
-in step 4 become unnecessary, and the hop is encrypted. Best security outcome,
-at the cost of one more daemon to keep running.
+`http://127.0.0.1:3000`. The tunnel dials out, so the origin needs **no inbound
+ports open at all**. The 443 conflict stops mattering, the firewall rules in
+step 4 become unnecessary, and the hop is encrypted. Best security outcome, at
+the cost of one more daemon to keep running.
 
 **Full (strict) on an alternate origin port.** Terminate TLS in nginx on 8443
 with a certificate, then use a Cloudflare Origin Rule to override the origin
