@@ -158,8 +158,9 @@ In the `rafidef.github.io` repository, once the new domain is live:
    Old shares and any indexed PDF links point straight at those paths, and the
    redirect only covers the root document.
 4. In Google Search Console, add `rafidazhar.dev` as a property and use the
-   Change of Address tool from the old property. This matters more than the
-   meta refresh, because it is the signal Google actually acts on quickly.
+   Change of Address tool from the old property. See `deploy/SEARCH-CONSOLE.md`
+   for the full sequence, including what to do when that tool refuses to
+   validate a meta refresh.
 
 Replacement `robots.txt` for the old origin:
 
