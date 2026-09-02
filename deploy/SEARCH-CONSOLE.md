@@ -132,13 +132,17 @@ into the redirect shell for exactly this reason.
 
 This is a real possibility, not a remote one. The tool wants to see the old
 site issuing a 301, and GitHub Pages cannot issue one for a user site. What the
-cutover produces instead is an instant meta refresh plus `rel=canonical` plus
-`noindex, follow`, which is the platform ceiling.
+cutover produces instead is an instant meta refresh plus `rel=canonical`, which
+is the platform ceiling.
 
 If the tool rejects it, nothing is broken and there is nothing further to fix
-on the old origin. The canonical and the `noindex, follow` still do the
-consolidation work directly, just more slowly and with less certainty than an
-accepted Change of Address would give. Move on to Phase 5 and let it settle.
+on the old origin. The canonical still does the consolidation work directly,
+just more slowly and with less certainty than an accepted Change of Address
+would give. Move on to Phase 5 and let it settle.
+
+Change of Address is an accelerator, not a prerequisite. It declares a move
+that the redirect already performs; it does not perform one itself. That is why
+the order matters: cutover first, declaration second.
 
 Do not delete the old repository to "force" the move. That turns a redirect
 into a dead 404 and throws away the link equity this whole phase exists to

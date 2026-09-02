@@ -15,7 +15,25 @@
     -->
     <link rel="canonical" href="https://rafidazhar.dev/" />
     <meta http-equiv="refresh" content="0; url=https://rafidazhar.dev/" />
-    <meta name="robots" content="noindex, follow" />
+
+    <!--
+      There is deliberately NO "noindex" here, and it must not be added back.
+
+      This page's whole job is to hand the old origin's accumulated ranking
+      signals to the new one. rel=canonical is the instruction that does that:
+      consolidate everything you know about this URL into the target.
+
+      noindex is the opposite instruction. It says drop this page, transfer
+      nothing. Worse, Google warns against pairing it with rel=canonical at
+      all, because canonical consolidates signals into the target and noindex
+      is one of the signals that can travel with them. The bad outcome is
+      rafidazhar.dev inheriting the noindex.
+
+      The old URL still leaves the index on its own: the instant meta refresh
+      reads as a move, and the canonical points the authority at the new home.
+      That is the natural decay a 301 would have produced, which is what we
+      want here.
+    -->
 
     <!--
       DO NOT REMOVE. This is the Search Console verification token for the
