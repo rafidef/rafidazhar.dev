@@ -6,11 +6,12 @@
  * robots.txt all derive from it. Cutting over to rafidazhar.dev is a one-line
  * env change plus a rebuild, nothing else.
  *
- * The fallback is the currently-live GitHub Pages origin, deliberately: until
- * the new domain is purchased and resolving, a build with no env set must not
- * advertise a dead canonical to crawlers.
+ * The fallback is the real origin. It was the GitHub Pages URL while the
+ * domain was unregistered, so that a build with no env set could not advertise
+ * a dead canonical; now that rafidazhar.dev is the home, falling back to the
+ * old origin is what would be wrong.
  */
-const RAW = process.env.NEXT_PUBLIC_SITE_URL ?? "https://rafidef.github.io";
+const RAW = process.env.NEXT_PUBLIC_SITE_URL ?? "https://rafidazhar.dev";
 
 /** Origin with any trailing slash stripped. */
 export const SITE_URL = RAW.replace(/\/+$/, "");
