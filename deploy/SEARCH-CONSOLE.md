@@ -65,17 +65,27 @@ Keep the TXT record forever. Deleting it unverifies the property.
 
 ## Phase 2. Submit the sitemap
 
-In the new property: **Sitemaps** in the left nav, enter `sitemap.xml` in the
-box, Submit.
+In the new property: **Sitemaps** in the left nav, then enter the FULL URL:
+
+```
+https://rafidazhar.dev/sitemap.xml
+```
+
+Not the bare path. A URL prefix property renders its own origin as a grey label
+to the left of the box and wants only the path appended, but a Domain property
+spans several schemes and subdomains at once, so it cannot infer which origin
+you mean and the box takes a complete URL. Phase 1 sets up a Domain property,
+so the full URL is the correct form here.
 
 Status should become **Success** with 1 discovered URL. The site is genuinely
 one page, so 1 is correct and not a sign of a truncated sitemap.
 
 If it says "Couldn't fetch", the usual causes in order:
 
-1. The property is the wrong variant. A Domain property avoids this entirely.
+1. You entered the bare path in a Domain property. Use the full URL.
 2. Cloudflare is challenging the fetch. Recheck the Googlebot row in Preflight.
-3. You submitted the full URL instead of the path. The box wants `sitemap.xml`.
+3. The sitemap itself is not reachable. Confirm with
+   `curl -s https://rafidazhar.dev/sitemap.xml`.
 
 ---
 
