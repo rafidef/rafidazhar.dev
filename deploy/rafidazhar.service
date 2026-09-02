@@ -1,0 +1,47 @@
+# systemd unit for the Next.js standalone server.
+#
+# Install to /etc/systemd/system/rafidazhar.service
+#
+# Reads NEXT_PUBLIC_SITE_URL from /srv/rafidazhar/shared/.env so the origin is
+# still configured in exactly one place on the server. Changing the domain is
+# editing that file plus a rebuild, nothing else.
+
+[Unit]
+Description=rafidazhar.dev portfolio (Next.js)
+After=network.target
+
+[Service]
+Type=simple
+User=deploy
+Group=deploy
+WorkingDirectory=/srv/rafidazhar/current
+
+EnvironmentFile=/srv/rafidazhar/shared/.env
+Environment=NODE_ENV=production
+Environment=PORT=3000
+Environment=HOSTNAME=127.0.0.1
+
+ExecStart=/usr/bin/node server.js
+
+Restart=always
+RestartSec=3
+
+# Hardening. The app serves static files and needs no write access anywhere.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/srv/rafidazhar/current/.next/cache
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+LockPersonality=true
+MemoryDenyWriteExecute=false
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=rafidazhar
+
+[Install]
+WantedBy=multi-user.target

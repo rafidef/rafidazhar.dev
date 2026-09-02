@@ -1,0 +1,25 @@
+node_modules/
+.next/
+out/
+build/
+next-env.d.ts
+*.tsbuildinfo
+
+.env
+.env.local
+.env*.local
+
+.DS_Store
+*.pem
+npm-debug.log*
+yarn-error.log*
+
+# Reference clone of the old site. Read-only input, never shipped.
+legacy-site/
+
+# Agent workspace config, not shared.
+.claude/
+.agents/
+
+# Stray output from an unrelated tool.
+bpp9000_*.task

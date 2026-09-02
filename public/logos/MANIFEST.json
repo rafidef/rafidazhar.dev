@@ -1,0 +1,85 @@
+{
+  "note": "Marks are trademarks of their respective owners, used here to identify tools worked with. Simple Icons is CC0; devicon is MIT.",
+  "icons": [
+    {
+      "file": "docker.svg",
+      "label": "Docker",
+      "source": "simple-icons"
+    },
+    {
+      "file": "githubactions.svg",
+      "label": "GitHub Actions",
+      "source": "simple-icons"
+    },
+    {
+      "file": "cloudflare.svg",
+      "label": "Cloudflare",
+      "source": "simple-icons"
+    },
+    {
+      "file": "linux.svg",
+      "label": "Linux",
+      "source": "simple-icons"
+    },
+    {
+      "file": "ubuntu.svg",
+      "label": "Ubuntu",
+      "source": "simple-icons"
+    },
+    {
+      "file": "debian.svg",
+      "label": "Debian",
+      "source": "simple-icons"
+    },
+    {
+      "file": "archlinux.svg",
+      "label": "Arch Linux",
+      "source": "simple-icons"
+    },
+    {
+      "file": "cisco.svg",
+      "label": "Cisco",
+      "source": "simple-icons"
+    },
+    {
+      "file": "mikrotik.svg",
+      "label": "MikroTik",
+      "source": "simple-icons"
+    },
+    {
+      "file": "vmware.svg",
+      "label": "VMware",
+      "source": "simple-icons"
+    },
+    {
+      "file": "virtualbox.svg",
+      "label": "VirtualBox",
+      "source": "simple-icons"
+    },
+    {
+      "file": "googlecloud.svg",
+      "label": "Google Cloud",
+      "source": "simple-icons"
+    },
+    {
+      "file": "git.svg",
+      "label": "Git",
+      "source": "simple-icons"
+    },
+    {
+      "file": "github.svg",
+      "label": "GitHub",
+      "source": "simple-icons"
+    },
+    {
+      "file": "aws.svg",
+      "label": "Amazon Web Services",
+      "source": "devicon"
+    },
+    {
+      "file": "azure.svg",
+      "label": "Microsoft Azure",
+      "source": "devicon"
+    }
+  ]
+}

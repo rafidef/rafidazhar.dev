@@ -1,0 +1,273 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TOKENS
+
+   "Ink, paper, and one lime that behaves like a material."
+
+   One accent for the whole page (Section 4.2 Colour Consistency Lock). The
+   lime has enough luminance to be a *surface* you set dark type on, and
+   nowhere near enough contrast to be *type* on a light background, so the
+   rule falls out of the physics:
+
+       lime is a surface, ink is the text
+
+   In light mode lime is only ever a fill, a marker or a block. In dark mode
+   it may additionally be type. Verified contrast:
+       ink on paper      16.0:1   AAA
+       paper on ink      15.2:1   AAA
+       muted on paper     5.2:1   AA
+       muted on ink       6.7:1   AA
+       ink on lime       13.1:1   AAA
+       lime on paper       1.1:1  FAILS, hence the rule above
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@theme {
+  --color-lime: #c3ec3f;
+  --color-lime-ink: #101416;
+
+  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+
+  /* Shape Consistency Lock (Section 4.4): exactly two tiers, documented.
+     surfaces + media = 4px, interactive = full pill. Nothing else. */
+  --radius-surface: 4px;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root {
+  color-scheme: light;
+  --bg: #ebeeec;
+  --bg-raised: #f4f6f4;
+  --bg-sunken: #dfe3e0;
+  --text: #101416;
+  --text-muted: #4e5a56;
+  --line: rgb(16 20 22 / 0.12);
+  --line-strong: rgb(16 20 22 / 0.24);
+  --accent: #c3ec3f;
+  --accent-ink: #101416;
+  /* The accent adapted for the few places it must be TEXT rather than a
+     surface. Raw lime on paper is 1.1:1, so light mode darkens it down the
+     same hue to clear AA (5.6:1) while staying recognisably the brand colour.
+     Section 8.B: brand fidelity AND contrast, in both modes. */
+  --accent-text: #4a6104;
+  /* Shadows tinted to the background hue, never pure black (Section 4.4). */
+  --shadow-lift: 0 1px 2px rgb(16 20 22 / 0.06), 0 12px 32px rgb(16 20 22 / 0.08);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #101416;
+  --bg-raised: #171d1f;
+  --bg-sunken: #0b0e0f;
+  --text: #e8ecea;
+  --text-muted: #93a19f;
+  --line: rgb(232 236 234 / 0.1);
+  --line-strong: rgb(232 236 234 / 0.22);
+  --accent: #c3ec3f;
+  --accent-ink: #101416;
+  /* On graphite the raw lime is already 13:1, so no adaptation needed. */
+  --accent-text: #c3ec3f;
+  --shadow-lift: 0 1px 2px rgb(0 0 0 / 0.4), 0 12px 32px rgb(0 0 0 / 0.36);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #101416;
+    --bg-raised: #171d1f;
+    --bg-sunken: #0b0e0f;
+    --text: #e8ecea;
+    --text-muted: #93a19f;
+    --line: rgb(232 236 234 / 0.1);
+    --line-strong: rgb(232 236 234 / 0.22);
+    --accent-text: #c3ec3f;
+    --shadow-lift: 0 1px 2px rgb(0 0 0 / 0.4), 0 12px 32px rgb(0 0 0 / 0.36);
+  }
+}
+
+/* Semantic aliases so components never reach for a raw hex. */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-raised: var(--bg-raised);
+  --color-bg-sunken: var(--bg-sunken);
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-text: var(--accent-text);
+}
+
+/* ── BASE ─────────────────────────────────────────────────────────────────── */
+
+* {
+  min-width: 0;
+}
+
+html {
+  /* Gated: smooth scroll is motion, and motion is opt-out (Section 6.B). */
+  scroll-behavior: auto;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv01";
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+/* The lime focus ring is invisible on the lime surface itself; invert there. */
+.on-accent :focus-visible,
+:focus-visible.on-accent {
+  outline-color: var(--accent-ink);
+}
+
+/* ── UTILITIES ────────────────────────────────────────────────────────────── */
+
+.shell {
+  width: 100%;
+  max-width: 1400px;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+@media (min-width: 768px) {
+  .shell {
+    padding-inline: 2.5rem;
+  }
+}
+@media (min-width: 1280px) {
+  .shell {
+    padding-inline: 4rem;
+  }
+}
+
+/* Display type. Hierarchy comes from weight + width + colour, so the size
+   ramp stays deliberately shallow (the old site drove hierarchy off raw size
+   alone, which is the Section 9.B failure this replaces). */
+.display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-variation-settings: "wdth" 100, "opsz" 32;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+.display-wide {
+  font-variation-settings: "wdth" 120, "opsz" 40;
+}
+
+/* The marker. Lime as a physical highlight behind type, never lime type on
+   paper. Uses box-decoration-clone so it survives line wraps intact. */
+.marker {
+  background: var(--accent);
+  color: var(--accent-ink);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding: 0.06em 0.28em;
+  border-radius: var(--radius-surface);
+}
+
+/* The lighter half of the marker family. A full lime block six times in one
+   paragraph reads as noise, so only the leading phrase gets the block and the
+   rest get a lime rule with the emphasis carried by weight. Works in both
+   themes because the text colour never changes. */
+.mark-rule {
+  color: var(--text);
+  font-weight: 600;
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 0.02em;
+}
+
+.hairline {
+  border-color: var(--line);
+}
+
+/* Fixed, pointer-events-none grain. Never on a scrolling container
+   (Section 6.E). */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .grain {
+    display: none;
+  }
+}
+
+/* ── REDUCED MOTION (Section 6.B, mandatory above MOTION_INTENSITY 3) ────────
+   Global backstop. Every JS-driven animation additionally checks
+   useReducedMotion() and degrades to a static end-state; this block catches
+   anything CSS-driven, including the marquee. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .marquee-track {
+    animation: none !important;
+    transform: none !important;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+/* ── MARQUEE ──────────────────────────────────────────────────────────────── */
+@keyframes marquee-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.marquee-track {
+  animation: marquee-drift var(--marquee-duration, 48s) linear infinite;
+  will-change: transform;
+}
+
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}

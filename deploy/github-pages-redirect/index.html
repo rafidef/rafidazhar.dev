@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!--
+      GitHub Pages cannot serve a real 301 for a user site: no header control,
+      no status code control. A same page instant meta refresh plus a canonical
+      link is the strongest permanent redirect signal this host can produce.
+      Google consolidates on it; other crawlers honour it less consistently.
+
+      Replace BOTH occurrences of the target origin below if the domain
+      changes again.
+    -->
+    <link rel="canonical" href="https://rafidazhar.dev/" />
+    <meta http-equiv="refresh" content="0; url=https://rafidazhar.dev/" />
+    <meta name="robots" content="noindex, follow" />
+
+    <title>Rafid Azhar | DevOps &amp; Cloud Engineer</title>
+
+    <style>
+      :root { color-scheme: light dark; }
+      body {
+        margin: 0;
+        min-height: 100dvh;
+        display: grid;
+        place-items: center;
+        padding: 2rem;
+        font: 400 16px/1.6 ui-sans-serif, system-ui, sans-serif;
+        background: #ebeeec;
+        color: #101416;
+        text-align: center;
+      }
+      a { color: inherit; font-weight: 600; }
+      .mark { font-family: ui-monospace, monospace; color: #4e5a56; }
+      .dot { color: #4a6104; }
+      @media (prefers-color-scheme: dark) {
+        body { background: #101416; color: #e8ecea; }
+        .mark { color: #93a19f; }
+        .dot { color: #c3ec3f; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="mark">&lt;rafidazhar<span class="dot">.</span>dev/&gt;</p>
+      <p>This site has moved to <a href="https://rafidazhar.dev/">rafidazhar.dev</a>.</p>
+    </main>
+
+    <!-- Belt and braces for clients that ignore the meta refresh. -->
+    <script>
+      location.replace("https://rafidazhar.dev/");
+    </script>
+  </body>
+</html>
